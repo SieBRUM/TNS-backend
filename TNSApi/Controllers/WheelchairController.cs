@@ -1,25 +1,33 @@
 ﻿using System.Web.Http;
 using TNSApi.Models;
+using TNSApi.Services;
+using System.Linq;
 
 namespace TNSApi.Controllers
 {
     public class WheelchairController : ApiController
     {
+        private IDatabaseServiceProvider _database;
+
+        public WheelchairController(IDatabaseServiceProvider database)
+        {
+            _database = database;
+        }
 
         // GET: api/Wheelchair
         public IHttpActionResult Get()
         {
-            TestClass test = new TestClass();
-            test.name = "Siebren";
-            test.age = 19;
-            test.description = "Such an awesome developer, you should hire him!";
-            return Ok(test);
+           var user = _database.Users.Where(x => x.UserId == 1).FirstOrDefault();
+
+            return Ok(user);
         }
 
         // GET: api/Wheelchair/5
         public IHttpActionResult Get(int id)
         {
-            return BadRequest("bloediebloe");
+            var user = _database.Users.Where(x => x.UserId == id).FirstOrDefault();
+
+            return Ok(user);
         }
 
         // POST: api/Wheelchair
