@@ -7,18 +7,16 @@ using System.Web;
 
 namespace TNSApi.Mapping
 {
-    [Table("tbl_users")]
-    public class User
+    [Table("tbl_Wheels")]
+    public class Wheel
     {
         [Key]
-        [Column("UserId")]
+        [Column("WheelId")]
         public int Id { get; set; }
+
         [Required]
-        public string Username { get; set; }
+        public double Price { get; set; }
         [Required]
-        public bool IsActive { get; set; }
-        [Required]
-        public DateTime Created { get; set; }
-        public DateTime? LastLogin { get; set; }
+        public string Description { get; set; }
     }
 }

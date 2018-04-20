@@ -2,6 +2,7 @@ namespace TNSApi.Models
 {
     using System.Data.Entity;
     using TNSApi.Mapping;
+    using TNSApi.Mapping.Link_tables;
     using TNSApi.Services;
 
     public class DatabaseServiceProvider : DbContext, IDatabaseServiceProvider
@@ -22,5 +23,20 @@ namespace TNSApi.Models
 
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Wheelchair> Wheelchairs { get; set; }
+        public virtual DbSet<Addition> Additions { get; set; }
+        public virtual DbSet<Article> Articles { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Frontwheel> Frontwheels { get; set; }
+        public virtual DbSet<Hoop> Hoops { get; set; }
+        public virtual DbSet<RalColor> RalColors { get; set; }
+        public virtual DbSet<Tire> Tires { get; set; }
+        public virtual DbSet<Wheel> Wheels { get; set; }
+        public virtual DbSet<Wheelprotector> Wheelprotectors { get; set; }
+
+        public virtual DbSet<WheelchairArticle> WheelchairArticles { get; set; }
+        public virtual DbSet<WheelchairFrontwheel> WheelchairFrontwheels { get; set; }
+        public virtual DbSet<WheelchairHoop> WheelchairHoops { get; set; }
+        public virtual DbSet<WheelchairTire> WheelchairTires { get; set; }
+        public virtual DbSet<WheelchairWheelprotector> WheelchairWheelprotectors { get; set; }
     }
 }

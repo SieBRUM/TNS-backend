@@ -7,18 +7,15 @@ using System.Web;
 
 namespace TNSApi.Mapping
 {
-    [Table("tbl_users")]
-    public class User
+    [Table("tbl_ralcolors")]
+    public class RalColor
     {
         [Key]
-        [Column("UserId")]
+        [Column("RalId")]
         public int Id { get; set; }
+
         [Required]
-        public string Username { get; set; }
-        [Required]
-        public bool IsActive { get; set; }
-        [Required]
-        public DateTime Created { get; set; }
-        public DateTime? LastLogin { get; set; }
+        [Column("RalColorCode")]
+        public int ColorCode { get; set; }
     }
 }

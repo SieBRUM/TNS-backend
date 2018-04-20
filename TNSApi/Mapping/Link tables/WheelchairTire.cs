@@ -3,22 +3,27 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TNSApi.Mapping.Link_tables
 {
-    [Table("tbl_wheelchair_articles")]
-    public class WheelchairArticle
+    [Table("tbl_wheelchairs_tires")]
+    public class WheelchairTire
     {
         [Key]
-        [Column("WheelchairArticleId")]
+        [Column("WheelchairTireId")]
         public int Id { get; set; }
+
         [Required]
         public int WheelchairId { get; set; }
         [Required]
-        public int ArticlesId { get; set; }
+        public int TireId { get; set; }
         [Required]
         public int AdditionId { get; set; }
+        [Required]
+        public int RalId { get; set; }
 
-        [ForeignKey("ArticlesId")]
-        public virtual Article Article { get; set; }
+        [ForeignKey("TireId")]
+        public virtual Tire Tire { get; set; }
         [ForeignKey("AdditionId")]
         public virtual Addition Addition { get; set; }
+        [ForeignKey("RalId")]
+        public virtual RalColor Color { get; set; }
     }
 }

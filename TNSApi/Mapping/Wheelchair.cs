@@ -56,7 +56,11 @@ namespace TNSApi.Mapping
         public virtual User User { get; set; }
         [ForeignKey("CustomerId")]
         public virtual Customer Customer { get; set; }
-        [ForeignKey("Id")]
-        public virtual WheelchairArticle Articles { get; set; }
+
+        public ICollection<WheelchairArticle> Articles { get; set; }
+        public ICollection<WheelchairFrontwheel> Frontwheels { get; set; }
+        public ICollection<WheelchairHoop> Hoops { get; set; }
+        public ICollection<WheelchairTire> Tires { get; set; }
+        public ICollection<WheelchairWheelprotector> Wheelprotectors { get; set; }
     }
 }
