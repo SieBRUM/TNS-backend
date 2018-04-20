@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,5 +30,7 @@ namespace TNSApi.Services
         DbSet<WheelchairHoop> WheelchairHoops { get; set; }
         DbSet<WheelchairTire> WheelchairTires { get; set; }
         DbSet<WheelchairWheelprotector> WheelchairWheelprotectors { get; set; }
+
+        DbContext Context { get; }
     }
 }

@@ -1,6 +1,7 @@
 namespace TNSApi.Models
 {
     using System.Data.Entity;
+    using System.Threading.Tasks;
     using TNSApi.Mapping;
     using TNSApi.Mapping.Link_tables;
     using TNSApi.Services;
@@ -38,5 +39,13 @@ namespace TNSApi.Models
         public virtual DbSet<WheelchairHoop> WheelchairHoops { get; set; }
         public virtual DbSet<WheelchairTire> WheelchairTires { get; set; }
         public virtual DbSet<WheelchairWheelprotector> WheelchairWheelprotectors { get; set; }
+
+        public virtual DbContext Context
+        {
+            get
+            {
+                return this;
+            }
+        }
     }
 }

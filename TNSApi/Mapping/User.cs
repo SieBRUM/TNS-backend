@@ -16,7 +16,13 @@ namespace TNSApi.Mapping
         [Required]
         public string Username { get; set; }
         [Required]
+        public string Password { get; set; }
+        [Required]
         public bool IsActive { get; set; }
+        [Required]
+        public string Token { get; set; }
+        [Required]
+        public string AccessLevel { get; set; }
         [Required]
         public DateTime Created { get; set; }
         public DateTime? LastLogin { get; set; }
