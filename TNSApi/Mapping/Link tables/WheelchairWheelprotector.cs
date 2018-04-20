@@ -16,7 +16,7 @@ namespace TNSApi.Mapping.Link_tables
         [Required]
         public int AdditionId { get; set; }
 
-        [ForeignKey("ArticlesId")]
+        [ForeignKey("WheelprotectorId")]
         public virtual Wheelprotector WheelProtector { get; set; }
         [ForeignKey("AdditionId")]
         public virtual Addition Addition { get; set; }
