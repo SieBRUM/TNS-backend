@@ -11,5 +11,6 @@ namespace TNSApi.Services
     public interface IDatabaseServiceProvider
     {
         DbSet<User> Users { get; set; }
+        DbSet<Wheelchair> Wheelchairs { get; set; }
     }
 }

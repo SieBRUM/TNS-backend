@@ -2,6 +2,8 @@
 using TNSApi.Models;
 using TNSApi.Services;
 using System.Linq;
+using TNSApi.Mapping;
+using System.Net;
 
 namespace TNSApi.Controllers
 {
@@ -17,17 +19,22 @@ namespace TNSApi.Controllers
         // GET: api/Wheelchair
         public IHttpActionResult Get()
         {
-           var user = _database.Users.Where(x => x.UserId == 1).FirstOrDefault();
+            var wheelchairs = _database.Wheelchairs.ToList();
 
-            return Ok(user);
+            return Ok(wheelchairs);
         }
 
         // GET: api/Wheelchair/5
         public IHttpActionResult Get(int id)
         {
-            var user = _database.Users.Where(x => x.UserId == id).FirstOrDefault();
+            var wheelchair = _database.Wheelchairs.Where(x => x.Id == id).FirstOrDefault();
 
-            return Ok(user);
+            if(wheelchair == null)
+            {
+                return Content(HttpStatusCode.NotFound, "Could not find wheelchair with id: " + id);
+            }
+
+            return Ok(wheelchair);
         }
 
         // POST: api/Wheelchair

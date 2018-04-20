@@ -11,11 +11,16 @@ namespace TNSApi.Mapping
     public class User
     {
         [Key]
-        public int UserId { get; set; }
+        [Column("UserId")]
+        public int Id { get; set; }
+        [Required]
         public string Username { get; set; }
+        [Required]
         public string Password { get; set; }
+        [Required]
         public bool IsActive { get; set; }
-        public DateTime? Created { get; set; }
+        [Required]
+        public DateTime Created { get; set; }
         public DateTime? LastLogin { get; set; }
     }
 }
