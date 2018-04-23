@@ -17,16 +17,26 @@ namespace TNSApi.Controllers
         }
 
         // GET: api/Wheelchair
-        public IHttpActionResult Get()
+        public IHttpActionResult Get([FromBody] User user)
         {
+            if (AuthorizationService.CheckIfAuthorized(ref user, ref _database, AccessLevel.Default) != 0)
+            {
+                return Content(HttpStatusCode.Forbidden, "User not logged in.");
+            }
+
             var wheelchairs = _database.Wheelchairs.ToList();
 
             return Ok(wheelchairs);
         }
 
         // GET: api/Wheelchair/5
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult Get([FromBody] User user, int id)
         {
+            if(AuthorizationService.CheckIfAuthorized(ref user, ref _database, AccessLevel.Default) != 0)
+            {
+                return Content(HttpStatusCode.Forbidden, "User not logged in.");
+            }
+
             var wheelchair = _database.Wheelchairs.Where(x => x.Id == id).FirstOrDefault();
 
             if(wheelchair == null)
