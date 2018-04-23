@@ -26,10 +26,10 @@ namespace TNSApi.Controllers
         }
 
 
-        // POST: api/Wheelchair
-        public IHttpActionResult Post([FromBody]User user)
+        [Route("api/login")]
+        [HttpPost]
+        public IHttpActionResult Login([FromBody]User user)
         {
-            // haha
             user = _database.Users.Where(x => x.Username == user.Username && x.Password == user.Password).FirstOrDefault();
             if (user == null)
             {
@@ -44,6 +44,19 @@ namespace TNSApi.Controllers
             _database.Context.SaveChanges();
 
            return Ok(frontendUser);
+        }
+
+        [HttpPost]
+        public IHttpActionResult Authorize([FromBody]User user)
+        {
+            if(AuthorizationService.CheckIfAuthorized(ref user, ref _database, AccessLevel.Default) != 0)
+            {
+                return Unauthorized();
+            }
+
+            var frontendUser = new RequestUser() { Username = user.Username, Token = user.Token, AccessLevel = user.AccessLevel, LastLogin = user.LastLogin };
+
+            return Ok(frontendUser);
         }
     }
 
