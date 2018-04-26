@@ -17,9 +17,10 @@ namespace TNSApi.Controllers
             _database = database;
         }
 
-        [HttpPost]
-        public IHttpActionResult GetUsers([FromBody] User user)
+        [HttpGet]
+        public IHttpActionResult GetUsers()
         {
+            User user = new User();
             int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Admin);
 
             if (authorizedMessage == 1 || authorizedMessage == 2)
@@ -52,6 +53,70 @@ namespace TNSApi.Controllers
                 });
             }
 
+            return Ok(frontendUsers);
+        }
+
+        [HttpPost]
+        public IHttpActionResult EditUser([FromBody] User user)
+        {
+            User requestingUser = new User();
+
+            int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref requestingUser, ref _database, Request.Headers, AccessLevel.Admin);
+
+            if (authorizedMessage == 1 || authorizedMessage == 2)
+            {
+                return Content(HttpStatusCode.Forbidden, "User not logged in.");
+            }
+            if (authorizedMessage == 3)
+            {
+                return Content(HttpStatusCode.Unauthorized, "User has no permission.");
+            }
+            if (authorizedMessage == 4)
+            {
+                return Content(HttpStatusCode.Forbidden, "User account is disabled.");
+            }
+
+            if(user.Id == 0)
+            {
+                if(_database.Users.Where(x => x.Username == user.Username).FirstOrDefault() != null)
+                {
+                    return Content(HttpStatusCode.BadRequest, "Username already exists.");
+                }
+
+                user.Created = DateTime.Now;
+                _database.Users.Add(user);
+            }
+            else
+            {
+                User changeUser = _database.Users.Where(x => x.Id == user.Id).FirstOrDefault();
+                changeUser.AccessLevel = user.AccessLevel;
+                changeUser.IsActive = user.IsActive;
+                if (user.Password != null)
+                {
+                    changeUser.Password = user.Password;
+                }
+
+                _database.Context.Entry(changeUser).State = System.Data.Entity.EntityState.Modified;
+            }
+
+
+            _database.Context.SaveChanges();
+
+            List<User> users = _database.Users.ToList();
+            List<ListPageUser> frontendUsers = new List<ListPageUser>();
+
+            for (int i = 0; i < users.Count; i++)
+            {
+                frontendUsers.Add(new ListPageUser()
+                {
+                    Id = users[i].Id,
+                    Username = users[i].Username,
+                    AccessLevel = users[i].AccessLevel,
+                    LastLogin = users[i].LastLogin,
+                    Created = users[i].Created,
+                    IsActive = users[i].IsActive,
+                });
+            }
             return Ok(frontendUsers);
         }
     }
