@@ -19,7 +19,7 @@ namespace TNSApi.Controllers
         // GET: api/Wheelchair
         public IHttpActionResult Get([FromBody] User user)
         {
-            if (AuthorizationService.CheckIfAuthorized(ref user, ref _database, AccessLevel.Default) != 0)
+            if (AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Default) != 0)
             {
                 return Content(HttpStatusCode.Forbidden, "User not logged in.");
             }
@@ -32,7 +32,7 @@ namespace TNSApi.Controllers
         // GET: api/Wheelchair/5
         public IHttpActionResult Get([FromBody] User user, int id)
         {
-            if(AuthorizationService.CheckIfAuthorized(ref user, ref _database, AccessLevel.Default) != 0)
+            if(AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Default) != 0)
             {
                 return Content(HttpStatusCode.Forbidden, "User not logged in.");
             }
