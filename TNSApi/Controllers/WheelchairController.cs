@@ -17,8 +17,10 @@ namespace TNSApi.Controllers
         }
 
         // GET: api/Wheelchair
-        public IHttpActionResult Get([FromBody] User user)
+        public IHttpActionResult Get()
         {
+            User user = new User();
+
             if (AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Default) != 0)
             {
                 return Content(HttpStatusCode.Forbidden, "User not logged in.");
