@@ -28,6 +28,11 @@ namespace TNSApi.Controllers
                 return Unauthorized();
             }
 
+            if(user.IsActive == false)
+            {
+                return Unauthorized();
+            }
+
             user.Token = Guid.NewGuid().ToString();
 
             var frontendUser = new RequestUser() { Username = user.Username, Token = user.Token, AccessLevel = user.AccessLevel, LastLogin = user.LastLogin };
@@ -41,12 +46,18 @@ namespace TNSApi.Controllers
         [HttpPost]
         public IHttpActionResult Authorize([FromBody]User user)
         {
-            if(AuthorizationService.CheckIfAuthorized(ref user, ref _database, AccessLevel.Default) != 0)
+            if (AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Default) != 0)
             {
                 return Unauthorized();
             }
 
-            var frontendUser = new RequestUser() { Username = user.Username, Token = user.Token, AccessLevel = user.AccessLevel, LastLogin = user.LastLogin };
+            var frontendUser = new RequestUser()
+            {
+                Username = user.Username,
+                Token = user.Token,
+                AccessLevel = user.AccessLevel,
+                LastLogin = user.LastLogin
+            };
 
             return Ok(frontendUser);
         }
