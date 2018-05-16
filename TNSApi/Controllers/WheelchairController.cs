@@ -4,6 +4,10 @@ using TNSApi.Services;
 using System.Linq;
 using TNSApi.Mapping;
 using System.Net;
+using System.Collections;
+using System.Collections.Generic;
+using System;
+using TNSApi.Mapping.Link_tables;
 
 namespace TNSApi.Controllers
 {
@@ -17,14 +21,9 @@ namespace TNSApi.Controllers
         }
 
         // GET: api/Wheelchair
-        public IHttpActionResult Get()
+        public IHttpActionResult Get([FromBody]User user)
         {
-            User user = new User();
-
-            if (AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Default) != 0)
-            {
-                return Content(HttpStatusCode.Forbidden, "User not logged in.");
-            }
+            int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Admin);
 
             var wheelchairs = _database.Wheelchairs.ToList();
 
@@ -32,12 +31,10 @@ namespace TNSApi.Controllers
         }
 
         // GET: api/Wheelchair/5
-        public IHttpActionResult Get([FromBody] User user, int id)
+        public IHttpActionResult Get([FromBody] int id)
         {
-            if(AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Default) != 0)
-            {
-                return Content(HttpStatusCode.Forbidden, "User not logged in.");
-            }
+            User user = new User();
+            int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Admin);
 
             var wheelchair = _database.Wheelchairs.Where(x => x.Id == id).FirstOrDefault();
 
@@ -50,9 +47,47 @@ namespace TNSApi.Controllers
         }
 
         // POST: api/Wheelchair
-        public IHttpActionResult Post([FromBody]string value)
+        public IHttpActionResult Post([FromBody] Wheelchair wheelchair)
         {
-            return Ok();
+            User user = new User();
+            int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Admin);
+
+            if (authorizedMessage == 1 || authorizedMessage == 2)
+            {
+                return Content(HttpStatusCode.Forbidden, "User not logged in.");
+            }
+            if (authorizedMessage == 3)
+            {
+                return Content(HttpStatusCode.Unauthorized, "User has no permission.");
+            }
+            if (authorizedMessage == 4)
+            {
+                return Content(HttpStatusCode.Forbidden, "User account is disabled.");
+            }
+
+            if (wheelchair.Id == 0)
+            {
+                wheelchair.CustomerId = 2;
+                wheelchair.DateOfMeasurement = DateTime.Now;
+                wheelchair.Dealer = "Dirk";
+                wheelchair.UserId = user.Id;
+
+                _database.Wheelchairs.Add(wheelchair);
+                _database.Context.SaveChanges();
+
+                
+            }
+            else
+            {
+
+                foreach (var item in _database.WheelchairArticles.Where(x => x.WheelchairId == wheelchair.Id))
+                {
+                    _database.WheelchairArticles.Remove(item);
+                }
+            }
+            _database.Context.SaveChanges();
+
+            return Ok(wheelchair);
         }
 
         // PUT: api/Wheelchair/5
@@ -66,5 +101,35 @@ namespace TNSApi.Controllers
         {
             return Ok();
         }
+
+        [Route("api/wheelchair/products")]
+        [HttpGet]
+        public IHttpActionResult GetProducts([FromBody]User user)
+        {
+            int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Admin);
+
+            Products products = new Products();
+            products.Articles = _database.Articles.ToList();
+            products.FrontWheels = _database.Frontwheels.ToList();
+            products.Hoops = _database.Hoops.ToList();
+            products.Additions = _database.Additions.ToList();
+            products.Wheel = _database.Wheels.ToList();
+            products.WheelProtector = _database.Wheelprotectors.ToList();
+            products.RalColors = _database.RalColors.ToList();
+            products.Tires = _database.Tires.ToList();
+            return Ok(products);
+        }
+    }
+
+    public class Products
+    {
+        public ICollection<Article> Articles { get; set; }
+        public ICollection<Frontwheel> FrontWheels { get; set; }
+        public ICollection<Hoop> Hoops { get; set; }
+        public ICollection<Addition> Additions { get; set; }
+        public ICollection<Wheel> Wheel { get; set; }
+        public ICollection<Wheelprotector> WheelProtector { get; set; }
+        public ICollection<Tire> Tires { get; set; }
+        public ICollection<RalColor> RalColors { get; set; }
     }
 }
