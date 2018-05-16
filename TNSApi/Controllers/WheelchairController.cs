@@ -21,29 +21,28 @@ namespace TNSApi.Controllers
         }
 
         // GET: api/Wheelchair
-        public IHttpActionResult Get([FromBody]User user)
+        public IHttpActionResult Get()
         {
-            int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Admin);
+            User user = new User();
+            int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Default);
+
+
+            if (authorizedMessage == 1 || authorizedMessage == 2)
+            {
+                return Content(HttpStatusCode.Forbidden, "User not logged in.");
+            }
+            if (authorizedMessage == 3)
+            {
+                return Content(HttpStatusCode.Unauthorized, "User has no permission.");
+            }
+            if (authorizedMessage == 4)
+            {
+                return Content(HttpStatusCode.Forbidden, "User account is disabled.");
+            }
 
             var wheelchairs = _database.Wheelchairs.ToList();
 
             return Ok(wheelchairs);
-        }
-
-        // GET: api/Wheelchair/5
-        public IHttpActionResult Get([FromBody] int id)
-        {
-            User user = new User();
-            int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Admin);
-
-            var wheelchair = _database.Wheelchairs.Where(x => x.Id == id).FirstOrDefault();
-
-            if(wheelchair == null)
-            {
-                return Content(HttpStatusCode.NotFound, "Could not find wheelchair with id: " + id);
-            }
-
-            return Ok(wheelchair);
         }
 
         // POST: api/Wheelchair
@@ -104,9 +103,23 @@ namespace TNSApi.Controllers
 
         [Route("api/wheelchair/products")]
         [HttpGet]
-        public IHttpActionResult GetProducts([FromBody]User user)
+        public IHttpActionResult GetProducts()
         {
-            int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Admin);
+            User user = new User();
+            int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Default);
+
+            if (authorizedMessage == 1 || authorizedMessage == 2)
+            {
+                return Content(HttpStatusCode.Forbidden, "User not logged in.");
+            }
+            if (authorizedMessage == 3)
+            {
+                return Content(HttpStatusCode.Unauthorized, "User has no permission.");
+            }
+            if (authorizedMessage == 4)
+            {
+                return Content(HttpStatusCode.Forbidden, "User account is disabled.");
+            }
 
             Products products = new Products();
             products.Articles = _database.Articles.ToList();
@@ -117,6 +130,8 @@ namespace TNSApi.Controllers
             products.WheelProtector = _database.Wheelprotectors.ToList();
             products.RalColors = _database.RalColors.ToList();
             products.Tires = _database.Tires.ToList();
+
+
             return Ok(products);
         }
     }
