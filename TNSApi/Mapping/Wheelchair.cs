@@ -18,8 +18,9 @@ namespace TNSApi.Mapping
         public int CustomerId { get; set; }
         [Required]
         public int UserId { get; set; }
+        public int? AdditionId { get; set; }
         [Required]
-        public int AdditionId { get; set; }
+        public int RalId { get; set; }
 
         [Required]
         public int SerialNumber { get; set; }
@@ -56,6 +57,8 @@ namespace TNSApi.Mapping
         public virtual User User { get; set; }
         [ForeignKey("CustomerId")]
         public virtual Customer Customer { get; set; }
+        [ForeignKey("RalId")]
+        public virtual RalColor Color { get; set; }
 
         public ICollection<WheelchairArticle> Articles { get; set; }
         public ICollection<WheelchairFrontwheel> Frontwheels { get; set; }

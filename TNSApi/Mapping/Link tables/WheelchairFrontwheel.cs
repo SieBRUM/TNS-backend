@@ -18,8 +18,7 @@ namespace TNSApi.Mapping.Link_tables
         public int WheelchairId { get; set; }
         [Required]
         public int FrontWheelId { get; set; }
-        [Required]
-        public int AdditionId { get; set; }
+        public int? AdditionId { get; set; }
 
         [ForeignKey("FrontWheelId")]
         public virtual Frontwheel Frontwheel { get; set; }
