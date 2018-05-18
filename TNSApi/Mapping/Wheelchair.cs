@@ -66,5 +66,8 @@ namespace TNSApi.Mapping
         public ICollection<WheelchairTire> Tires { get; set; }
         public ICollection<WheelchairWheelprotector> Wheelprotectors { get; set; }
         public ICollection<WheelchairWheel> Wheels { get; set; }
+
+        [NotMapped]
+        public int OldId { get; set; }
     }
 }
