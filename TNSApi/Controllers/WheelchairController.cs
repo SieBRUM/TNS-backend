@@ -100,7 +100,7 @@ namespace TNSApi.Controllers
                 return Content(HttpStatusCode.Forbidden, "User account is disabled.");
             }
 
-            if (wheelchair.Id)
+            if (wheelchair.Id == 0)
             {
                 wheelchair.DateOfMeasurement = DateTime.Now;
                 wheelchair.Dealer = "Dirk";
