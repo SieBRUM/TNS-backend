@@ -148,6 +148,7 @@
     <Compile Include="Mapping\Frontwheel.cs" />
     <Compile Include="Mapping\Hoop.cs" />
     <Compile Include="Mapping\Link tables\WheelchairArticle.cs" />
+    <Compile Include="Mapping\Link tables\WheelchairWheel.cs" />
     <Compile Include="Mapping\Link tables\WheelchairFrontwheel.cs" />
     <Compile Include="Mapping\Link tables\WheelchairHoop.cs" />
     <Compile Include="Mapping\Link tables\WheelchairTire.cs" />

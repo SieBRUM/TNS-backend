@@ -45,6 +45,42 @@ namespace TNSApi.Controllers
             return Ok(wheelchairs);
         }
 
+        // GET: api/Wheelchair
+        public IHttpActionResult Get(int Id)
+        {
+            User user = new User();
+            int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Default);
+
+
+            if (authorizedMessage == 1 || authorizedMessage == 2)
+            {
+                return Content(HttpStatusCode.Forbidden, "User not logged in.");
+            }
+            if (authorizedMessage == 3)
+            {
+                return Content(HttpStatusCode.Unauthorized, "User has no permission.");
+            }
+            if (authorizedMessage == 4)
+            {
+                return Content(HttpStatusCode.Forbidden, "User account is disabled.");
+            }
+
+            var wheelchair = _database.Wheelchairs.Where(x => x.Id == Id).FirstOrDefault();
+            if(wheelchair == null || wheelchair.Id == 0)
+            {
+                return NotFound();
+            }
+
+            wheelchair.Articles = _database.WheelchairArticles.Where(x => x.WheelchairId == wheelchair.Id).ToList();
+            wheelchair.Frontwheels = _database.WheelchairFrontwheels.Where(x => x.WheelchairId == wheelchair.Id).ToList();
+            wheelchair.Hoops = _database.WheelchairHoops.Where(x => x.WheelchairId == wheelchair.Id).ToList();
+            wheelchair.Tires = _database.WheelchairTires.Where(x => x.WheelchairId == wheelchair.Id).ToList();
+            wheelchair.Wheelprotectors = _database.WheelchairWheelprotectors.Where(x => x.WheelchairId == wheelchair.Id).ToList();
+            wheelchair.Wheels = _database.WheelchairWheels.Where(x => x.WheelchairId == wheelchair.Id).ToList();
+
+            return Ok(wheelchair);
+        }
+
         // POST: api/Wheelchair
         public IHttpActionResult Post([FromBody] Wheelchair wheelchair)
         {
@@ -64,26 +100,19 @@ namespace TNSApi.Controllers
                 return Content(HttpStatusCode.Forbidden, "User account is disabled.");
             }
 
-            if (wheelchair.Id == 0)
+            if (wheelchair.Id)
             {
-                wheelchair.CustomerId = 2;
                 wheelchair.DateOfMeasurement = DateTime.Now;
                 wheelchair.Dealer = "Dirk";
                 wheelchair.UserId = user.Id;
 
                 _database.Wheelchairs.Add(wheelchair);
-                _database.Context.SaveChanges();
-
-                
             }
             else
             {
-
-                foreach (var item in _database.WheelchairArticles.Where(x => x.WheelchairId == wheelchair.Id))
-                {
-                    _database.WheelchairArticles.Remove(item);
-                }
+                // TODO: EDIT
             }
+
             _database.Context.SaveChanges();
 
             return Ok(wheelchair);

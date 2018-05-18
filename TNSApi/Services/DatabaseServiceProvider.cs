@@ -39,6 +39,7 @@ namespace TNSApi.Models
         public virtual DbSet<WheelchairHoop> WheelchairHoops { get; set; }
         public virtual DbSet<WheelchairTire> WheelchairTires { get; set; }
         public virtual DbSet<WheelchairWheelprotector> WheelchairWheelprotectors { get; set; }
+        public virtual DbSet<WheelchairWheel> WheelchairWheels { get; set; }
 
         public virtual DbContext Context
         {
