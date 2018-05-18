@@ -15,6 +15,8 @@ namespace TNSApi.Mapping.Link_tables
         [Required]
         public int TireId { get; set; }
         public int? AdditionId { get; set; }
+        [Required]
+        public int RalId { get; set; }
 
         [ForeignKey("TireId")]
         public virtual Tire Tire { get; set; }

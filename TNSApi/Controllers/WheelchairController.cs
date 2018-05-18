@@ -21,8 +21,9 @@ namespace TNSApi.Controllers
         }
 
         // GET: api/Wheelchair
-        public IHttpActionResult Get()
+        public IHttpActionResult Get([FromBody]User user)
         {
+
             User user = new User();
             int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Default);
 
@@ -196,6 +197,19 @@ namespace TNSApi.Controllers
             {
                 return Ok(newWheelchair);
             }
+                _database.Context.SaveChanges();
+
+                
+            }
+            else
+            {
+
+                foreach (var item in _database.WheelchairArticles.Where(x => x.WheelchairId == wheelchair.Id))
+                {
+                    _database.WheelchairArticles.Remove(item);
+                }
+            }
+            _database.Context.SaveChanges();
         }
 
         // PUT: api/Wheelchair/5
@@ -212,6 +226,7 @@ namespace TNSApi.Controllers
 
         [Route("api/wheelchair/products")]
         [HttpGet]
+
         public IHttpActionResult GetProducts()
         {
             User user = new User();
@@ -239,7 +254,6 @@ namespace TNSApi.Controllers
             products.WheelProtector = _database.Wheelprotectors.ToList();
             products.RalColors = _database.RalColors.ToList();
             products.Tires = _database.Tires.ToList();
-
 
             return Ok(products);
         }
