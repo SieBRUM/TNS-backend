@@ -7,7 +7,7 @@ using System.Web;
 
 namespace TNSApi.Mapping.Link_tables
 {
-    [Table("tbl_wheelchair")]
+    [Table("tbl_wheelchairs_frontwheels")]
     public class WheelchairFrontwheel
     {
         [Key]

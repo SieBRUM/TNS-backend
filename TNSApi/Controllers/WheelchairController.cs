@@ -23,25 +23,61 @@ namespace TNSApi.Controllers
         // GET: api/Wheelchair
         public IHttpActionResult Get([FromBody]User user)
         {
-            int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Admin);
+
+            User user = new User();
+            int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Default);
+
+
+            if (authorizedMessage == 1 || authorizedMessage == 2)
+            {
+                return Content(HttpStatusCode.Forbidden, "User not logged in.");
+            }
+            if (authorizedMessage == 3)
+            {
+                return Content(HttpStatusCode.Unauthorized, "User has no permission.");
+            }
+            if (authorizedMessage == 4)
+            {
+                return Content(HttpStatusCode.Forbidden, "User account is disabled.");
+            }
 
             var wheelchairs = _database.Wheelchairs.ToList();
 
             return Ok(wheelchairs);
         }
 
-        // GET: api/Wheelchair/5
-        public IHttpActionResult Get([FromBody] int id)
+        // GET: api/Wheelchair
+        public IHttpActionResult Get(int Id)
         {
             User user = new User();
-            int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Admin);
+            int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Default);
 
-            var wheelchair = _database.Wheelchairs.Where(x => x.Id == id).FirstOrDefault();
 
-            if(wheelchair == null)
+            if (authorizedMessage == 1 || authorizedMessage == 2)
             {
-                return Content(HttpStatusCode.NotFound, "Could not find wheelchair with id: " + id);
+                return Content(HttpStatusCode.Forbidden, "User not logged in.");
             }
+            if (authorizedMessage == 3)
+            {
+                return Content(HttpStatusCode.Unauthorized, "User has no permission.");
+            }
+            if (authorizedMessage == 4)
+            {
+                return Content(HttpStatusCode.Forbidden, "User account is disabled.");
+            }
+
+            var wheelchair = _database.Wheelchairs.Where(x => x.Id == Id).FirstOrDefault();
+            if(wheelchair == null || wheelchair.Id == 0)
+            {
+                return NotFound();
+            }
+
+            wheelchair.Articles = _database.WheelchairArticles.Where(x => x.WheelchairId == wheelchair.Id).ToList();
+            wheelchair.Frontwheels = _database.WheelchairFrontwheels.Where(x => x.WheelchairId == wheelchair.Id).ToList();
+            wheelchair.Hoops = _database.WheelchairHoops.Where(x => x.WheelchairId == wheelchair.Id).ToList();
+            wheelchair.Tires = _database.WheelchairTires.Where(x => x.WheelchairId == wheelchair.Id).ToList();
+            wheelchair.Wheelprotectors = _database.WheelchairWheelprotectors.Where(x => x.WheelchairId == wheelchair.Id).ToList();
+            wheelchair.Wheels = _database.WheelchairWheels.Where(x => x.WheelchairId == wheelchair.Id).ToList();
 
             return Ok(wheelchair);
         }
@@ -49,6 +85,8 @@ namespace TNSApi.Controllers
         // POST: api/Wheelchair
         public IHttpActionResult Post([FromBody] Wheelchair wheelchair)
         {
+            Wheelchair newWheelchair = new Wheelchair();
+
             User user = new User();
             int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Admin);
 
@@ -65,14 +103,100 @@ namespace TNSApi.Controllers
                 return Content(HttpStatusCode.Forbidden, "User account is disabled.");
             }
 
-            if (wheelchair.Id == 0)
+            if (wheelchair.OldId == 0)
             {
-                wheelchair.CustomerId = 2;
                 wheelchair.DateOfMeasurement = DateTime.Now;
                 wheelchair.Dealer = "Dirk";
                 wheelchair.UserId = user.Id;
 
                 _database.Wheelchairs.Add(wheelchair);
+            }
+            else
+            {
+                wheelchair.User = user;
+                wheelchair.UserId = user.Id;
+                wheelchair.RalId = wheelchair.Color.Id;
+
+                var articles = _database.WheelchairArticles.Where(x => x.WheelchairId == wheelchair.OldId);
+                var frontwheels = _database.WheelchairFrontwheels.Where(x => x.WheelchairId == wheelchair.OldId);
+                var hoops = _database.WheelchairHoops.Where(x => x.WheelchairId == wheelchair.OldId);
+                var tires = _database.WheelchairTires.Where(x => x.WheelchairId == wheelchair.OldId);
+                var wps = _database.WheelchairWheelprotectors.Where(x => x.WheelchairId == wheelchair.OldId);
+                var wheels = _database.WheelchairWheels.Where(x => x.WheelchairId == wheelchair.OldId);
+                if (articles != null)
+                {
+                    _database.WheelchairArticles.RemoveRange(articles);
+                }
+                if(frontwheels != null)
+                {
+                    _database.WheelchairFrontwheels.RemoveRange(frontwheels);
+                }
+                if(hoops != null)
+                {
+                    _database.WheelchairHoops.RemoveRange(hoops);
+                }
+                if(tires != null)
+                {
+                    _database.WheelchairTires.RemoveRange(tires);
+                }
+                if(wps != null)
+                {
+                    _database.WheelchairWheelprotectors.RemoveRange(wps);
+                }
+                if(wheels != null)
+                {
+                    _database.WheelchairWheels.RemoveRange(wheels);
+                }
+
+                foreach (var item in wheelchair.Articles)
+                {
+                    _database.Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
+                    item.WheelchairId = 0;
+                }
+                foreach (var item in wheelchair.Frontwheels)
+                {
+                    _database.Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
+                    item.WheelchairId = 0;
+                }
+                foreach (var item in wheelchair.Hoops)
+                {
+                    _database.Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
+                    item.WheelchairId = 0;
+                }
+                foreach (var item in wheelchair.Tires)
+                {
+                    _database.Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
+                    item.WheelchairId = 0;
+                }
+                foreach (var item in wheelchair.Wheelprotectors)
+                {
+                    _database.Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
+                    item.WheelchairId = 0;
+                }
+                foreach (var item in wheelchair.Wheels)
+                {
+                    _database.Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
+                    item.WheelchairId = 0;
+                }
+                _database.Context.SaveChanges();
+
+                _database.Wheelchairs.Remove(_database.Wheelchairs.Where(x => x.Id == wheelchair.OldId).FirstOrDefault());
+                _database.Context.SaveChanges();
+                newWheelchair = OverwriteWheelchairData(wheelchair);
+
+                _database.Wheelchairs.Add(newWheelchair);
+            }
+
+            _database.Context.SaveChanges();
+
+            if(newWheelchair.Id == 0)
+            {
+                return Ok(wheelchair);
+            }
+            else
+            {
+                return Ok(newWheelchair);
+            }
                 _database.Context.SaveChanges();
 
                 
@@ -86,8 +210,6 @@ namespace TNSApi.Controllers
                 }
             }
             _database.Context.SaveChanges();
-
-            return Ok(wheelchair);
         }
 
         // PUT: api/Wheelchair/5
@@ -104,9 +226,24 @@ namespace TNSApi.Controllers
 
         [Route("api/wheelchair/products")]
         [HttpGet]
-        public IHttpActionResult GetProducts([FromBody]User user)
+
+        public IHttpActionResult GetProducts()
         {
-            int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Admin);
+            User user = new User();
+            int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Default);
+
+            if (authorizedMessage == 1 || authorizedMessage == 2)
+            {
+                return Content(HttpStatusCode.Forbidden, "User not logged in.");
+            }
+            if (authorizedMessage == 3)
+            {
+                return Content(HttpStatusCode.Unauthorized, "User has no permission.");
+            }
+            if (authorizedMessage == 4)
+            {
+                return Content(HttpStatusCode.Forbidden, "User account is disabled.");
+            }
 
             Products products = new Products();
             products.Articles = _database.Articles.ToList();
@@ -117,7 +254,103 @@ namespace TNSApi.Controllers
             products.WheelProtector = _database.Wheelprotectors.ToList();
             products.RalColors = _database.RalColors.ToList();
             products.Tires = _database.Tires.ToList();
+
             return Ok(products);
+        }
+
+        private Wheelchair OverwriteWheelchairData(Wheelchair wheelchair)
+        {
+
+            Wheelchair newWheelchair = new Wheelchair();
+            newWheelchair.Addition = wheelchair.Addition;
+            newWheelchair.AdditionId = wheelchair.AdditionId;
+            List<WheelchairArticle> newArticles = new List<WheelchairArticle>();
+            List<WheelchairFrontwheel> newFrontwheels = new List<WheelchairFrontwheel>();
+            List<WheelchairHoop> newHoops = new List<WheelchairHoop>();
+            List<WheelchairTire> newTires = new List<WheelchairTire>();
+            List<WheelchairWheel> newWheels = new List<WheelchairWheel>();
+            List<WheelchairWheelprotector> newWP = new List<WheelchairWheelprotector>();
+            foreach (var item in wheelchair.Articles)
+            {
+                newArticles.Add(new WheelchairArticle()
+                {
+                    Addition = item.Addition,
+                    AdditionId = item.AdditionId,
+                    ArticleId = item.ArticleId
+                });
+            }
+            foreach (var item in wheelchair.Frontwheels)
+            {
+                newFrontwheels.Add(new WheelchairFrontwheel()
+                {
+                    Addition = item.Addition,
+                    AdditionId = item.AdditionId,
+                    FrontWheelId = item.FrontWheelId
+                });
+            }
+            foreach (var item in wheelchair.Hoops)
+            {
+                newHoops.Add(new WheelchairHoop()
+                {
+                    Addition = item.Addition,
+                    AdditionId = item.AdditionId,
+                    HoopId = item.HoopId
+                });
+            }
+            foreach (var item in wheelchair.Tires)
+            {
+                newTires.Add(new WheelchairTire()
+                {
+                    Addition = item.Addition,
+                    AdditionId = item.AdditionId,
+                    TireId = item.TireId
+                });
+            }
+            foreach (var item in wheelchair.Wheels)
+            {
+                newWheels.Add(new WheelchairWheel()
+                {
+                    Addition = item.Addition,
+                    AdditionId = item.AdditionId,
+                    WheelId = item.WheelId
+                });
+            }
+            foreach (var item in wheelchair.Wheelprotectors)
+            {
+                newWP.Add(new WheelchairWheelprotector()
+                {
+                    Addition = item.Addition,
+                    AdditionId = item.AdditionId,
+                    WheelprotectorId = item.WheelprotectorId
+                });
+            }
+
+            newWheelchair.Articles = newArticles;
+            newWheelchair.BackrestHeight = wheelchair.BackrestHeight;
+            newWheelchair.BalancePoint = wheelchair.BalancePoint;
+            newWheelchair.Color = wheelchair.Color;
+            newWheelchair.CustomerId = wheelchair.CustomerId;
+            newWheelchair.DateOfMeasurement = wheelchair.DateOfMeasurement;
+            newWheelchair.Dealer = wheelchair.Dealer;
+            newWheelchair.FootplateWidth = wheelchair.FootplateWidth;
+            newWheelchair.FrameLength = wheelchair.FrameLength;
+            newWheelchair.Frontwheels = wheelchair.Frontwheels;
+            newWheelchair.Hoops = newHoops;
+            newWheelchair.LowerLegWidth = wheelchair.LowerLegWidth;
+            newWheelchair.OrderDate = wheelchair.OrderDate;
+            newWheelchair.RalId = wheelchair.RalId;
+            newWheelchair.SeatDepth = wheelchair.SeatDepth;
+            newWheelchair.SeatHeightBack = wheelchair.SeatHeightBack;
+            newWheelchair.SeatHeightFront = wheelchair.SeatHeightFront;
+            newWheelchair.SeatWidth = wheelchair.SeatWidth;
+            newWheelchair.SerialNumber = wheelchair.SerialNumber;
+            newWheelchair.Tires = newTires;
+            newWheelchair.User = wheelchair.User;
+            newWheelchair.UserId = wheelchair.UserId;
+            newWheelchair.Wheelprotectors = newWP;
+            newWheelchair.Wheels = newWheels;
+
+            return newWheelchair;
         }
     }
 
