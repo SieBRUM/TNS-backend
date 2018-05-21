@@ -240,18 +240,6 @@ namespace TNSApi.Controllers
             }
         }
 
-        // PUT: api/Wheelchair/5
-        public IHttpActionResult Put(int id, [FromBody]string value)
-        {
-            return Ok();
-        }
-
-        // DELETE: api/Wheelchair/5
-        public IHttpActionResult Delete(int id)
-        {
-            return Ok();
-        }
-
         [Route("api/wheelchair/products")]
         [HttpGet]
         public IHttpActionResult GetProducts()
@@ -283,7 +271,6 @@ namespace TNSApi.Controllers
             products.Tires = _database.Tires.ToList();
 
             products.RalColors = products.RalColors.DistinctBy(i => i.HexColorCode).ToList();
-
 
             return Ok(products);
         }
