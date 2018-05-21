@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using TNSApi.Mapping.Link_tables;
+using MoreLinq;
 
 namespace TNSApi.Controllers
 {
@@ -102,10 +103,51 @@ namespace TNSApi.Controllers
                 return Content(HttpStatusCode.Forbidden, "User account is disabled.");
             }
 
+            if(wheelchair.FootplateWidth == 0 || wheelchair.FrameLength == 0 || wheelchair.LowerLegWidth == 0 || wheelchair.SeatDepth == 0 
+                || wheelchair.SeatHeightBack == 0 || wheelchair.SeatHeightFront == 0 || wheelchair.SeatWidth == 0)
+            {
+                return BadRequest("Incorrect wheelchair sizes!");
+            }
+
+            if (wheelchair.Articles == null)
+            {
+                return BadRequest("Wheelchair must have atleast one article!");
+            }
+
+            if(wheelchair.CustomerId == 0)
+            {
+                return BadRequest("Wheelchair must have a customer bound!");
+            }
+
+            if(wheelchair.Frontwheels ==  null)
+            {
+                return BadRequest("Wheelchair must have atleast one frontwheel set!");
+            }
+
+            if (wheelchair.Hoops == null)
+            {
+                return BadRequest("Wheelchair must have atleast one hoop set!");
+            }
+
+            if (wheelchair.Tires == null)
+            {
+                return BadRequest("Wheelchair must have atleast one tire set!");
+            }
+
+            if (wheelchair.Wheels == null)
+            {
+                return BadRequest("Wheelchair must have atleast one wheel set!");
+            }
+
+            if (wheelchair.Color == null)
+            {
+                return BadRequest("Wheelchair must have a color!");
+            }
+
             if (wheelchair.OldId == 0)
             {
                 wheelchair.DateOfMeasurement = DateTime.Now;
-                wheelchair.Dealer = "Dirk";
+                wheelchair.Dealer = "TNS Rijen";
                 wheelchair.UserId = user.Id;
 
                 _database.Wheelchairs.Add(wheelchair);
@@ -239,6 +281,8 @@ namespace TNSApi.Controllers
             products.WheelProtector = _database.Wheelprotectors.ToList();
             products.RalColors = _database.RalColors.ToList();
             products.Tires = _database.Tires.ToList();
+
+            products.RalColors = products.RalColors.DistinctBy(i => i.HexColorCode).ToList();
 
 
             return Ok(products);
