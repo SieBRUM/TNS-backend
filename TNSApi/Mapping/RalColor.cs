@@ -17,5 +17,9 @@ namespace TNSApi.Mapping
         [Required]
         [Column("RalColorCode")]
         public int ColorCode { get; set; }
+
+        [Required]
+        [Column("HexColorCode")]
+        public string HexColorCode { get; set; }
     }
 }

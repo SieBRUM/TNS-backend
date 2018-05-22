@@ -30,6 +30,7 @@ namespace TNSApi.Services
         DbSet<WheelchairHoop> WheelchairHoops { get; set; }
         DbSet<WheelchairTire> WheelchairTires { get; set; }
         DbSet<WheelchairWheelprotector> WheelchairWheelprotectors { get; set; }
+        DbSet<WheelchairWheel> WheelchairWheels { get; set; }
 
         DbContext Context { get; }
     }
