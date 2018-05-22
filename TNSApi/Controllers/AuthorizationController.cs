@@ -22,7 +22,8 @@ namespace TNSApi.Controllers
         [HttpPost]
         public IHttpActionResult Login([FromBody]User user)
         {
-            user = _database.Users.Where(x => x.Username == user.Username && x.Password == user.Password).FirstOrDefault();
+            string hashedPassword = AuthorizationService.GetHashSha256(user.Password);
+            user = _database.Users.Where(x => x.Username == user.Username && x.Password == hashedPassword).FirstOrDefault();
             if (user == null)
             {
                 return Unauthorized();

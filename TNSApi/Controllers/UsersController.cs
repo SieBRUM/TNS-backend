@@ -76,24 +76,42 @@ namespace TNSApi.Controllers
                 return Content(HttpStatusCode.Forbidden, "User account is disabled.");
             }
 
+            if(user.Id == requestingUser.Id)
+            {
+                return BadRequest("Cannot change current logged in user!");
+            }
+
+
             if(user.Id == 0)
             {
                 if(_database.Users.Where(x => x.Username == user.Username).FirstOrDefault() != null)
                 {
                     return Content(HttpStatusCode.BadRequest, "Username already exists.");
                 }
-
+                user.Password = AuthorizationService.GetHashSha256(user.Password);
                 user.Created = DateTime.Now;
                 _database.Users.Add(user);
             }
             else
             {
                 User changeUser = _database.Users.Where(x => x.Id == user.Id).FirstOrDefault();
+
+                if (user.AccessLevel == "Default")
+                {
+                    if (changeUser.AccessLevel == "Admin")
+                    {
+                        if (_database.Users.Where(x => x.AccessLevel == "Admin").ToList().Count < 2)
+                        {
+                            return BadRequest("There has to be at least one Administrator account!");
+                        }
+                    }
+                }
+
                 changeUser.AccessLevel = user.AccessLevel;
                 changeUser.IsActive = user.IsActive;
                 if (user.Password != null)
                 {
-                    changeUser.Password = user.Password;
+                    changeUser.Password = AuthorizationService.GetHashSha256(user.Password);
                 }
 
                 _database.Context.Entry(changeUser).State = System.Data.Entity.EntityState.Modified;

@@ -12,11 +12,10 @@ namespace TNSApi.Mapping.Link_tables
         [Required]
         public int WheelchairId { get; set; }
         [Required]
-        public int ArticlesId { get; set; }
-        [Required]
-        public int AdditionId { get; set; }
+        public int ArticleId { get; set; }
+        public int? AdditionId { get; set; }
 
-        [ForeignKey("ArticlesId")]
+        [ForeignKey("ArticleId")]
         public virtual Article Article { get; set; }
         [ForeignKey("AdditionId")]
         public virtual Addition Addition { get; set; }
