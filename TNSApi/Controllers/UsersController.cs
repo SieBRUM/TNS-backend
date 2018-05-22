@@ -88,7 +88,7 @@ namespace TNSApi.Controllers
                 {
                     return Content(HttpStatusCode.BadRequest, "Username already exists.");
                 }
-
+                user.Password = AuthorizationService.GetHashSha256(user.Password);
                 user.Created = DateTime.Now;
                 _database.Users.Add(user);
             }
@@ -111,7 +111,7 @@ namespace TNSApi.Controllers
                 changeUser.IsActive = user.IsActive;
                 if (user.Password != null)
                 {
-                    changeUser.Password = user.Password;
+                    changeUser.Password = AuthorizationService.GetHashSha256(user.Password);
                 }
 
                 _database.Context.Entry(changeUser).State = System.Data.Entity.EntityState.Modified;

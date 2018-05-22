@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using TNSApi.Mapping;
 
@@ -38,6 +40,21 @@ namespace TNSApi.Services
             }
 
             return AuthorizatedMessage.Authorized;
+        }
+
+
+        // source: https://stackoverflow.com/questions/12416249/hashing-a-string-with-sha256
+        public static string GetHashSha256(string text)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(text);
+            SHA256Managed hashstring = new SHA256Managed();
+            byte[] hash = hashstring.ComputeHash(bytes);
+            string hashString = string.Empty;
+            foreach (byte x in hash)
+            {
+                hashString += String.Format("{0:x2}", x);
+            }
+            return hashString;
         }
     }
 
