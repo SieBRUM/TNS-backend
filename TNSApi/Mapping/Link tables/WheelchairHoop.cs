@@ -15,8 +15,6 @@ namespace TNSApi.Mapping.Link_tables
         [Required]
         public int HoopId { get; set; }
         public int? AdditionId { get; set; }
-        [Required]
-        public bool IsWide { get; set; }
 
         [ForeignKey("HoopId")]
         public virtual Hoop Hoop { get; set; }
