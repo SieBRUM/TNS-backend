@@ -17,7 +17,15 @@ namespace TNSApi.Controllers
             _database = database;
         }
 
-
+        /// <summary>
+        /// User login.
+        /// Route: {host}/{alias}/api/login
+        /// </summary>
+        /// <param name="user">User login details given in the body of the request</param>
+        /// <returns>
+        /// Logged in user with accesstoken + accesslevel if successful
+        /// Unauthorized if not succesful
+        /// </returns>
         [Route("api/login")]
         [HttpPost]
         public IHttpActionResult Login([FromBody]User user)
@@ -44,6 +52,15 @@ namespace TNSApi.Controllers
            return Ok(frontendUser);
         }
 
+        /// <summary>
+        /// Authorizes the user when the frontend is opened. 
+        /// Route: {host}/{alias}/api/authorize
+        /// </summary>
+        /// <param name="user">User details (username + accesstoken) given in body of request</param>
+        /// <returns> 
+        /// Logged in user if successful
+        /// Unauthorized if not suscessful
+        /// </returns>
         [HttpPost]
         public IHttpActionResult Authorize([FromBody]User user)
         {
@@ -64,7 +81,7 @@ namespace TNSApi.Controllers
         }
     }
 
-
+    // User class without exposed password
     public class RequestUser
     {
         public string Username { get; set; }

@@ -17,6 +17,14 @@ namespace TNSApi.Controllers
             _database = database;
         }
 
+        /// <summary>
+        /// Gets all users and returns them
+        /// Route: {host}/{alias}/api/users
+        /// </summary>
+        /// <returns>
+        /// Returns all users if successful
+        /// HTTP error code when unsuccesful
+        /// </returns>
         [HttpGet]
         public IHttpActionResult GetUsers()
         {
@@ -55,7 +63,15 @@ namespace TNSApi.Controllers
 
             return Ok(frontendUsers);
         }
-
+        /// <summary>
+        /// Add of edit user
+        /// Route: {host}/{alias}/api/users
+        /// </summary>
+        /// <param name="user">New/editted user data</param>
+        /// <returns>
+        /// New/editted user data if succesful
+        /// HTTP error code when unsuccesful
+        /// </returns>
         [HttpPost]
         public IHttpActionResult EditUser([FromBody] User user)
         {
@@ -139,6 +155,9 @@ namespace TNSApi.Controllers
         }
     }
 
+    /// <summary>
+    /// User data needed in frontend (without password)
+    /// </summary>
     public class ListPageUser
     {
         public int Id { get; set; }

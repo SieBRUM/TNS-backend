@@ -21,8 +21,16 @@ namespace TNSApi.Controllers
             _database = database;
         }
 
-        // GET: api/Wheelchair
-        public IHttpActionResult Get()
+        /// <summary>
+        /// Gets all wheelchairs from database and returns them
+        /// Route: {host}/{alias}/api/wheelchair
+        /// </summary>
+        /// <returns>
+        /// All wheelchairs from database if succesful
+        /// HTTP error code
+        /// </returns>
+        [HttpGet]
+        public IHttpActionResult GetWheelchairs()
         {
             User user = new User();
             int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Default);
@@ -46,8 +54,18 @@ namespace TNSApi.Controllers
             return Ok(wheelchairs);
         }
 
-        // GET: api/Wheelchair
-        public IHttpActionResult Get(int Id)
+        /// <summary>
+        /// Gets wheelchair by id
+        /// Route: {host}/{alias}/api/wheelchair
+        /// </summary>
+        /// <param name="Id">Id of wheelchar</param>
+        /// <returns>
+        /// Wheelchair if successful
+        /// NotFound if no wheelchair with given Id
+        /// HTTP error when unsuccesful
+        /// </returns>
+        [HttpGet]
+        public IHttpActionResult GetWheelchairById(int Id)
         {
             User user = new User();
             int authorizedMessage = (int)AuthorizationService.CheckIfAuthorized(ref user, ref _database, Request.Headers, AccessLevel.Default);
@@ -82,8 +100,17 @@ namespace TNSApi.Controllers
             return Ok(wheelchair);
         }
 
-        // POST: api/Wheelchair
-        public IHttpActionResult Post([FromBody] Wheelchair wheelchair)
+        /// <summary>
+        /// Edit or adds wheelchairr
+        /// Route: {host}/{alias}/api/wheelchair
+        /// </summary>
+        /// <param name="wheelchair">New/editted wheelchair</param>
+        /// <returns>
+        /// New/ editted wheelchair if succesful
+        /// HTTP error if unsuccesful
+        /// </returns>
+        [HttpPost]
+        public IHttpActionResult EditWheelchair([FromBody] Wheelchair wheelchair)
         {
             Wheelchair newWheelchair = new Wheelchair();
 
@@ -240,6 +267,14 @@ namespace TNSApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Returns all products that can be connected to the wheelchair
+        /// Route: {host}/{alias}/api/wheelchair/products
+        /// </summary>
+        /// <returns>
+        /// All the products if succesful
+        /// HTTP error code if unsuccesful
+        /// </returns>
         [Route("api/wheelchair/products")]
         [HttpGet]
         public IHttpActionResult GetProducts()
@@ -275,6 +310,13 @@ namespace TNSApi.Controllers
             return Ok(products);
         }
 
+        /// <summary>
+        /// Because currently Entity does not like working with this many linking tables, we have to manually overwrite the data.
+        /// </summary>
+        /// <param name="wheelchair">Old wheelchair with data inside it</param>
+        /// <returns>
+        /// New wheelchair with the data of the old wheelchair
+        /// </returns>
         private Wheelchair OverwriteWheelchairData(Wheelchair wheelchair)
         {
 
@@ -371,6 +413,9 @@ namespace TNSApi.Controllers
         }
     }
 
+    /// <summary>
+    /// Class that contains all possible products
+    /// </summary>
     public class Products
     {
         public ICollection<Article> Articles { get; set; }

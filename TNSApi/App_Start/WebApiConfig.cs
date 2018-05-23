@@ -8,6 +8,9 @@ using TNSApi.App_Start;
 
 namespace TNSApi
 {
+    /// <summary>
+    /// Global WebApi configuration
+    /// </summary>
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)

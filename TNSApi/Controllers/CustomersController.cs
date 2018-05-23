@@ -16,6 +16,14 @@ namespace TNSApi.Controllers
             _database = database;
         }
 
+        /// <summary>
+        /// Retuns all customers that are saved in database
+        /// Route: {host}/{alias}/api/customers
+        /// </summary>
+        /// <returns>
+        /// List of all customers when successful
+        /// Error http code when not successful
+        /// </returns>
         [HttpGet]
         public IHttpActionResult GetCustomers()
         {
@@ -41,6 +49,16 @@ namespace TNSApi.Controllers
             return Ok(customers);
         }
 
+
+        /// <summary>
+        /// Edit or add user
+        /// Route: {host}/{alias}/api/customers
+        /// </summary>
+        /// <param name="customer"> New or editted user</param>
+        /// <returns>
+        /// New/editted user if succesful
+        /// HTTP error code when unsuccessful
+        /// </returns>
         [HttpPost]
         public IHttpActionResult EditCustomer([FromBody]Customer customer)
         {

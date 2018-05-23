@@ -8,6 +8,10 @@ using System.Web;
 
 namespace TNSApi.App_Start
 {
+    /// <summary>
+    /// JsonFormatter that overwrites the default XML formatter.
+    /// Makes sure the API returns JSON instead of XML.
+    /// </summary>
     public class JsonFormatter : JsonMediaTypeFormatter
     {
         public JsonFormatter()

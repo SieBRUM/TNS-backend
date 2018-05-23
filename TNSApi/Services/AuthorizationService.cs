@@ -9,9 +9,21 @@ using TNSApi.Mapping;
 
 namespace TNSApi.Services
 {
+    /// <summary>
+    /// Contains helpful authorization functions
+    /// </summary>
     public static class AuthorizationService
     {
-
+        /// <summary>
+        /// Function that checks if user data inside the request headers are valid (authentication)
+        /// </summary>
+        /// <param name="user">requesting user</param>
+        /// <param name="db">database</param>
+        /// <param name="headers">header data</param>
+        /// <param name="accessLevel">accesslevel required</param>
+        /// <returns>
+        /// Enum based on checks
+        /// </returns>
         public static AuthorizatedMessage CheckIfAuthorized(ref User user, ref IDatabaseServiceProvider db, HttpRequestHeaders headers, AccessLevel accessLevel)
         {
             if(!headers.TryGetValues("username", out var usernameValues) || !headers.TryGetValues("token", out var tokenValues))
@@ -44,6 +56,13 @@ namespace TNSApi.Services
 
 
         // source: https://stackoverflow.com/questions/12416249/hashing-a-string-with-sha256
+        /// <summary>
+        /// Hashes given text to a SHA256 string
+        /// </summary>
+        /// <param name="text">Unhashed text</param>
+        /// <returns>
+        /// SHA256 hashed text
+        /// </returns>
         public static string GetHashSha256(string text)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(text);
@@ -57,13 +76,18 @@ namespace TNSApi.Services
             return hashString;
         }
     }
-
+    /// <summary>
+    /// All possible accesslevels
+    /// </summary>
     public enum AccessLevel
     {
         Default,
         Admin
     }
 
+    /// <summary>
+    /// All possible Authorization messages
+    /// </summary>
     public enum AuthorizatedMessage
     {
         Authorized,

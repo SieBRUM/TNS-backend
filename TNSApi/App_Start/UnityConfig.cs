@@ -7,9 +7,11 @@ namespace TNSApi
 {
     /// <summary>
     /// Specifies the Unity configuration for the main container.
+    /// Unity is used for Dependency injection.
     /// </summary>
     public static class UnityConfig
     {
+        // Only returns when needed...
         #region Unity Container
         private static Lazy<IUnityContainer> container =
           new Lazy<IUnityContainer>(() =>
@@ -42,6 +44,7 @@ namespace TNSApi
             // container.LoadConfiguration();
 
             // TODO: Register your type's mappings here.
+            // Registering our DatabaseServiceProvider.
             container.RegisterType<IDatabaseServiceProvider, DatabaseServiceProvider>();
         }
     }

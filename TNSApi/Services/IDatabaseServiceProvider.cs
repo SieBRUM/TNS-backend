@@ -10,6 +10,10 @@ using TNSApi.Mapping.Link_tables;
 
 namespace TNSApi.Services
 {
+    /// <summary>
+    /// Interface of DatabaseServiceProvider.
+    /// Used for dependency injection
+    /// </summary>
     public interface IDatabaseServiceProvider
     {
         DbSet<User> Users { get; set; }
