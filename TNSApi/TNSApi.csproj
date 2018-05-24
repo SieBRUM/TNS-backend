@@ -171,6 +171,7 @@
     <Compile Include="Services\IDatabaseServiceProvider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Class Diagram.cd" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TNSApi.App_Start.JsonFormatter">
+    <Position X="0.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App_Start\JsonFormatter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.UnityConfig">
+    <Position X="6" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>App_Start\UnityConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.UnityWebApiActivator">
+    <Position X="2.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App_Start\UnityWebApiActivator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.WebApiConfig">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App_Start\WebApiConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.WebApiApplication">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Global.asax.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Controllers.AuthorizationController">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAQAAAAQAAAAAAA=</HashCode>
+      <FileName>Controllers\AuthorizationController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Controllers.RequestUser">
+    <Position X="2.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAACAAAAAQAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Controllers\AuthorizationController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Controllers.CustomersController">
+    <Position X="13.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAQAAAAAAAABAAA=</HashCode>
+      <FileName>Controllers\CustomersController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Controllers.UsersController">
+    <Position X="7" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAgA=</HashCode>
+      <FileName>Controllers\UsersController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Controllers.ListPageUser">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABACAAAAAAACAAAAEQAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\UsersController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Controllers.WheelchairController">
+    <Position X="5.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEIAAAAAAAAAAAAAAAAAAAAAAAAAQAQAEAAAABAAA=</HashCode>
+      <FileName>Controllers\WheelchairController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Controllers.Products">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAABAAAAAAAAAAAAAAAAAQgIRAAAAAAAAQAA=</HashCode>
+      <FileName>Controllers\WheelchairController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Mapping.Addition">
+    <Position X="18.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEAAAAAAAAAAAAAACAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Mapping\Addition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Mapping.Article">
+    <Position X="21" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mapping\Article.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Mapping.Customer">
+    <Position X="23.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAIAAAAQAQAAAAAAAACAAAAAQAAAAA=</HashCode>
+      <FileName>Mapping\Customer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Mapping.Frontwheel">
+    <Position X="18.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mapping\Frontwheel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Mapping.Hoop">
+    <Position X="21" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mapping\Hoop.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Mapping.RalColor">
+    <Position X="26.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAACAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mapping\RalColor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Mapping.Tire">
+    <Position X="23.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mapping\Tire.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Mapping.User">
+    <Position X="16" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABACAAAAAAACAAAAEQAAAAAAAAAAAAQCAAAAAAABAAA=</HashCode>
+      <FileName>Mapping\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Mapping.Wheel">
+    <Position X="18.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mapping\Wheel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Mapping.Wheelchair">
+    <Position X="29.25" Y="4.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>CSEDCAAIAkBAAAAAAAAAAEggIAUEQhoQAAAAgABAQBA=</HashCode>
+      <FileName>Mapping\Wheelchair.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Mapping.Wheelprotector">
+    <Position X="16" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mapping\Wheelprotector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Mapping.Link_tables.WheelchairArticle">
+    <Position X="18.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAEAAAAggAgAAABAAAAAA=</HashCode>
+      <FileName>Mapping\Link tables\WheelchairArticle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Mapping.Link_tables.WheelchairFrontwheel">
+    <Position X="23.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAABAAAAAAAAAAAAAAAggAgAAABAAAAAA=</HashCode>
+      <FileName>Mapping\Link tables\WheelchairFrontwheel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Mapping.Link_tables.WheelchairHoop">
+    <Position X="15.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAABAAAAAAAAAAgggAAAAABAAAAAA=</HashCode>
+      <FileName>Mapping\Link tables\WheelchairHoop.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Mapping.Link_tables.WheelchairTire">
+    <Position X="17.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAACAAAAggAAAAABAAAAQA=</HashCode>
+      <FileName>Mapping\Link tables\WheelchairTire.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Mapping.Link_tables.WheelchairWheel">
+    <Position X="23.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAggRAAAABAAAAAA=</HashCode>
+      <FileName>Mapping\Link tables\WheelchairWheel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Mapping.Link_tables.WheelchairWheelprotector">
+    <Position X="25.25" Y="6.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAggAQAAABAAAQAA=</HashCode>
+      <FileName>Mapping\Link tables\WheelchairWheelprotector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Services.AuthorizationService">
+    <Position X="2.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\AuthorizationService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TNSApi.Models.DatabaseServiceProvider" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CBEAAGAIAgBAAAAAAAAAAAAAcAAAQhIRAAAAAAAAQAA=</HashCode>
+      <FileName>Services\DatabaseServiceProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="System.Object" Collapsed="true">
+    <Position X="26.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="System.Web.HttpApplication" Collapsed="true">
+    <Position X="13.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="System.Web.Http.ApiController" Collapsed="true">
+    <Position X="11.5" Y="8" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="System.Data.Entity.DbContext">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="TNSApi.Services.IDatabaseServiceProvider">
+    <Position X="8.5" Y="6" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>CBEAAGAIAgBAAAAAAAAAAAAAcAAAQhIRAAAAAAAAQAA=</HashCode>
+      <FileName>Services\IDatabaseServiceProvider.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="TNSApi.Services.AccessLevel">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\AuthorizationService.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TNSApi.Services.AuthorizatedMessage">
+    <Position X="2.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABQAAAAAAAAAIABAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Services\AuthorizationService.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
